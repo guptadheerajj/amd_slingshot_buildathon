@@ -100,18 +100,64 @@ function FoodItem({ icon, name, weight, kcal, portion, onChangePortion }) {
 
 export default function Insights() {
   const navigate = useNavigate()
-  const [items, setItems] = useState(ITEMS)
+  
+  // Load real scan data if available, otherwise fallback to mock
+  const [scanData] = useState(() => {
+    const raw = sessionStorage.getItem('lastScanResult')
+    return raw ? JSON.parse(raw) : null
+  })
+  
+  const [previewUrl] = useState(() => sessionStorage.getItem('capturedMealPreview') || "")
 
-  const totalKcal = Math.round(items.reduce((s, i) => s + i.kcal * i.portion, 0))
+  const [items, setItems] = useState(scanData?.items || ITEMS)
+
+  const totalKcal = Math.round(items.reduce((s, i) => s + i.calories * (i.portion || 1), 0))
 
   const updatePortion = (id, delta) => {
     setItems(prev =>
       prev.map(item =>
-        item.id === id
-          ? { ...item, portion: Math.max(0.1, Math.round((item.portion + delta) * 10) / 10) }
+        item.id === id || item.name === id
+          ? { ...item, portion: Math.max(0.1, Math.round(((item.portion || 1) + delta) * 10) / 10) }
           : item
       )
     )
+  }
+
+  const handleLog = async () => {
+    // Construct final data with adjusted portions
+    const finalData = {
+      mealName: scanData?.mealName || "Meal Identified",
+      items: items,
+      totalMacros: {
+        calories: totalKcal,
+        protein: items.reduce((s, i) => s + (i.protein || 0) * (i.portion || 1), 0),
+        carbs: items.reduce((s, i) => s + (i.carbs || 0) * (i.portion || 1), 0),
+        fats: items.reduce((s, i) => s + (i.fats || 0) * (i.portion || 1), 0),
+        sugar: items.reduce((s, i) => s + (i.sugar || 0) * (i.portion || 1), 0),
+      },
+      forecast: scanData?.forecast || "balanced"
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/scan/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(finalData)
+      })
+
+      if (!response.ok) throw new Error('Failed to save log')
+      const result = await response.json()
+      
+      // Pass the success result to the celebration page
+      sessionStorage.setItem('lastSuccessLog', JSON.stringify({
+        calories: result.caloriesSaved,
+        streak: result.streak
+      }))
+      
+      navigate('/logged')
+    } catch (error) {
+      console.error('Log error:', error)
+    }
   }
 
   return (
@@ -121,8 +167,8 @@ export default function Insights() {
         {/* ── Hero meal image (col 8) ── */}
         <section className="col-span-12 lg:col-span-8 overflow-hidden rounded-3xl relative h-[380px]">
           <img
-            src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=1200&q=80"
-            alt="Scanned Meal – Spicy Marinara Pasta"
+            src={previewUrl || "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=1200&q=80"}
+            alt="Scanned Meal"
             className="w-full h-full object-cover"
           />
           <div
@@ -130,7 +176,7 @@ export default function Insights() {
             style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.65), transparent)' }}
           >
             <p className="text-sm font-medium uppercase tracking-widest mb-1 text-white opacity-80">Scanning Complete</p>
-            <h2 className="text-4xl font-extrabold font-headline text-white">Spicy Marinara Pasta</h2>
+            <h2 className="text-4xl font-extrabold font-headline text-white">{scanData?.mealName || "Meal Identified"}</h2>
           </div>
         </section>
 
@@ -150,19 +196,21 @@ export default function Insights() {
               <span className="material-symbols-outlined material-symbols-filled" style={{ color: 'var(--color-primary-container)' }}>bolt</span>
             </div>
 
-            <EnergyGauge state="crash" />
+            <EnergyGauge state={scanData?.forecast || "balanced"} />
 
             <div
               className="mt-6 p-5 rounded-2xl"
-              style={{ backgroundColor: 'rgba(179,27,37,0.07)', border: '1px solid rgba(251,81,81,0.2)' }}
+              style={{ 
+                backgroundColor: (scanData?.forecast === 'crash' || scanData?.forecast === 'sluggish') ? 'rgba(179,27,37,0.07)' : 'rgba(0,104,87,0.07)', 
+                border: (scanData?.forecast === 'crash' || scanData?.forecast === 'sluggish') ? '1px solid rgba(251,81,81,0.2)' : '1px solid rgba(150,244,220,0.2)' 
+              }}
             >
               <div className="flex gap-3">
-                <span className="material-symbols-outlined mt-0.5" style={{ color: 'var(--color-error)' }}>trending_down</span>
-                <p className="text-sm font-semibold leading-relaxed" style={{ color: 'var(--color-on-error-container)' }}>
-                  Sugar Crash Alert:{' '}
-                  <span className="font-normal opacity-90">
-                    You'll likely feel a sharp energy drop in about 90 minutes.
-                  </span>
+                <span className="material-symbols-outlined mt-0.5" style={{ color: (scanData?.forecast === 'crash' || scanData?.forecast === 'sluggish') ? 'var(--color-error)' : 'var(--color-secondary)' }}>
+                  { (scanData?.forecast === 'crash' || scanData?.forecast === 'sluggish') ? 'trending_down' : 'trending_up' }
+                </span>
+                <p className="text-sm font-semibold leading-relaxed" style={{ color: 'var(--color-on-surface)' }}>
+                  {scanData?.clinicalInsight || "Analysis complete. Stable energy levels expected."}
                 </p>
               </div>
             </div>
@@ -240,7 +288,7 @@ export default function Insights() {
           {/* Actions */}
           <div className="flex flex-col gap-3 mt-auto">
             <button
-              onClick={() => navigate('/logged')}
+              onClick={handleLog}
               className="w-full btn-gradient py-5 px-8 rounded-3xl font-extrabold text-lg flex items-center justify-center gap-3 shadow-ambient transition-all active:scale-95"
               style={{ color: 'var(--color-on-primary)' }}
             >

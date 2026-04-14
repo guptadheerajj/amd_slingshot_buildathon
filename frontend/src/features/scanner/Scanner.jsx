@@ -17,11 +17,34 @@ export default function Scanner() {
     setFlash(true)
     setCaptured(true)
     setTimeout(() => setFlash(false), 200)
+    // For mock shutter, we use a default image or currently selected file
     setTimeout(() => navigate('/analyzing'), 800)
+  }
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        const base64String = reader.result.split(',')[1]
+        sessionStorage.setItem('capturedMealImage', base64String)
+        sessionStorage.setItem('capturedMealPreview', reader.result)
+        navigate('/analyzing')
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   return (
     <div className="h-screen flex flex-col" style={{ backgroundColor: 'var(--color-on-surface)' }}>
+      {/* Invisible File Input */}
+      <input
+        type="file"
+        id="meal-upload"
+        className="hidden"
+        accept="image/*"
+        onChange={handleFileUpload}
+      />
 
       {/* Flash overlay */}
       {flash && <div className="fixed inset-0 bg-white z-[999] pointer-events-none" style={{ opacity: 0.8 }} />}
@@ -154,6 +177,7 @@ export default function Scanner() {
 
           {/* Upload button */}
           <button
+            onClick={() => document.getElementById('meal-upload').click()}
             className="flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm transition-colors"
             style={{ backgroundColor: 'var(--color-surface-container-low)', color: 'var(--color-primary)' }}
           >

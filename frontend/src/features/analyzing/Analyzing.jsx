@@ -12,8 +12,43 @@ export default function Analyzing() {
   const navigate = useNavigate()
   const [activeStep, setActiveStep] = useState(0)
   const [progress, setProgress] = useState(0)
+  const [previewUrl, setPreviewUrl] = useState('')
 
   useEffect(() => {
+    const savedPreview = sessionStorage.getItem('capturedMealPreview')
+    if (savedPreview) setPreviewUrl(savedPreview)
+
+    const runAnalysis = async () => {
+      const imageData = sessionStorage.getItem('capturedMealImage')
+      if (!imageData) {
+        console.error('No image data found in session storage')
+        // navigate('/scanner')
+        return
+      }
+
+      try {
+        const response = await fetch('http://localhost:5000/api/scan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: imageData })
+        })
+
+        if (!response.ok) throw new Error('Scan failed')
+        const data = await response.json()
+        
+        // Store for Insights
+        sessionStorage.setItem('lastScanResult', JSON.stringify(data))
+        
+        // Ensure we wait at least long enough for the cool animations
+        setTimeout(() => navigate('/insights'), 8000)
+      } catch (error) {
+        console.error('Analysis error:', error)
+        // In case of error, maybe show 404 or redirect back
+      }
+    }
+
+    runAnalysis()
+
     const timers = []
     STEPS.forEach((step, i) => {
       timers.push(setTimeout(() => {
@@ -21,8 +56,7 @@ export default function Analyzing() {
         setProgress(Math.round(((i + 1) / STEPS.length) * 100))
       }, step.delay))
     })
-    // Navigate to insights after analysis completes
-    timers.push(setTimeout(() => navigate('/insights'), 9000))
+
     return () => timers.forEach(clearTimeout)
   }, [navigate])
 
@@ -62,7 +96,7 @@ export default function Analyzing() {
             style={{ border: '4px solid var(--color-surface-container)' }}
           >
             <img
-              src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80"
+              src={previewUrl || "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80"}
               alt="Captured Meal being analyzed"
               className="w-full h-full object-cover"
               style={{ filter: 'brightness(0.75)' }}

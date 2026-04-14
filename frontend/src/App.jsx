@@ -6,6 +6,9 @@ import Scanner from './features/scanner/Scanner'
 import Analyzing from './features/analyzing/Analyzing'
 import Insights from './features/insights/Insights'
 import LogConfirmation from './features/confirmation/LogConfirmation'
+import History from './features/history/History'
+import Recipes from './features/recipes/Recipes'
+import Profile from './features/profile/Profile' // Will create this as well
 
 export default function App() {
   return (
@@ -16,9 +19,9 @@ export default function App() {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/insights"  element={<Insights />} />
-          <Route path="/history"   element={<PlaceholderPage title="Meal History" icon="history" />} />
-          <Route path="/recipes"   element={<PlaceholderPage title="Recipes" icon="restaurant_menu" />} />
-          <Route path="/profile"   element={<PlaceholderPage title="Profile" icon="person" />} />
+          <Route path="/history"   element={<History />} />
+          <Route path="/recipes"   element={<Recipes />} />
+          <Route path="/profile"   element={<Profile />} />
           <Route path="*"          element={<PlaceholderPage title="Page Not Found" icon="search_off" />} />
         </Route>
 

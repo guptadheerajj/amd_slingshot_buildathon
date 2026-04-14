@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -12,6 +12,10 @@ model User {
   email     String    @unique
   name      String?
   streak    Int       @default(0)
+  goalCalories Int    @default(2000)
+  goalProtein  Int    @default(150)
+  goalCarbs    Int    @default(250)
+  goalFats     Int    @default(70)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   mealLogs  MealLog[]
@@ -22,7 +26,7 @@ model MealLog {
   userId      String
   user        User     @relation(fields: [userId], references: [id])
   imageUrl    String?
-  items       Json?    // Array of detected items: { name: string, calories: number, ... }
+  items       String? // Stringified JSON array of items
   calories    Float    @default(0)
   protein     Float    @default(0)
   carbs       Float    @default(0)

@@ -79,36 +79,81 @@ function MealLogRow({ emoji, name, time, meal, tag, tagStyle, kcal, protein, car
 }
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
+import { useState, useEffect } from 'react'
+
+// ... (Sub-components MacroRing and MealLogRow remain the same)
+
 export default function Dashboard() {
   const navigate = useNavigate()
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/dashboard')
+        if (!response.ok) throw new Error('Failed to fetch dashboard')
+        const json = await response.json()
+        setData(json)
+      } catch (err) {
+        console.error('Dashboard error:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchDashboard()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="w-12 h-12 rounded-full border-4 border-t-transparent animate-spin" style={{ borderColor: 'var(--color-primary) transparent transparent transparent' }} />
+      </div>
+    )
+  }
+
+  const { user, summary, recentLogs, nudge } = data || {}
 
   const macros = [
-    { label: 'Calories', value: '1,850 / 2,200 kcal', pct: 85, color: 'var(--color-primary)' },
-    { label: 'Protein',  value: '90g / 150g',          pct: 60, color: 'var(--color-secondary)' },
-    { label: 'Carbs',    value: '120g / 300g',          pct: 40, color: 'var(--color-tertiary)' },
-    { label: 'Fats',     value: '35g / 70g',            pct: 50, color: 'var(--color-on-surface-variant)' },
+    { 
+      label: 'Calories', 
+      value: `${Math.round(summary?.calories || 0)} / ${user?.goals?.calories} kcal`, 
+      pct: Math.min(100, Math.round(((summary?.calories || 0) / (user?.goals?.calories || 2000)) * 100)), 
+      color: 'var(--color-primary)' 
+    },
+    { 
+      label: 'Protein',  
+      value: `${Math.round(summary?.protein || 0)}g / ${user?.goals?.protein}g`,          
+      pct: Math.min(100, Math.round(((summary?.protein || 0) / (user?.goals?.protein || 150)) * 100)), 
+      color: 'var(--color-secondary)' 
+    },
+    { 
+      label: 'Carbs',    
+      value: `${Math.round(summary?.carbs || 0)}g / ${user?.goals?.carbs}g`,          
+      pct: Math.min(100, Math.round(((summary?.carbs || 0) / (user?.goals?.carbs || 250)) * 100)), 
+      color: 'var(--color-tertiary)' 
+    },
+    { 
+      label: 'Fats',     
+      value: `${Math.round(summary?.fats || 0)}g / ${user?.goals?.fats}g`,            
+      pct: Math.min(100, Math.round(((summary?.fats || 0) / (user?.goals?.fats || 70)) * 100)), 
+      color: 'var(--color-on-surface-variant)' 
+    },
   ]
 
-  const logs = [
-    {
-      emoji: '🥑', name: 'Avocado Toast & Egg', time: '8:30 AM', meal: 'Breakfast',
-      tag: 'High Protein',
-      tagStyle: { backgroundColor: 'var(--color-secondary-container)', color: 'var(--color-on-secondary-container)' },
-      kcal: 420, protein: 18, carbs: 32,
-    },
-    {
-      emoji: '🥗', name: 'Quinoa Chicken Salad', time: '1:15 PM', meal: 'Lunch',
-      tag: 'Balanced',
-      tagStyle: { backgroundColor: 'var(--color-surface-container)', color: 'var(--color-on-surface-variant)' },
-      kcal: 580, protein: 34, carbs: 45,
-    },
-    {
-      emoji: '🍎', name: 'Apple & Almonds', time: '3:30 PM', meal: 'Snack',
-      tag: 'Sugar Alert',
-      tagStyle: { backgroundColor: 'rgba(251,81,81,0.12)', color: 'var(--color-error)' },
-      kcal: 210, protein: 5, carbs: 28,
-    },
-  ]
+  const formatLogTime = (dateStr) => {
+    return new Date(dateStr).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+  }
+
+  const getLogEmoji = (name) => {
+      const n = name.toLowerCase()
+      if (n.includes('pasta') || n.includes('noodle')) return '🍝'
+      if (n.includes('salad') || n.includes('green')) return '🥗'
+      if (n.includes('chicken') || n.includes('meat')) return '🍗'
+      if (n.includes('egg') || n.includes('breakfast')) return '🍳'
+      if (n.includes('apple') || n.includes('fruit')) return '🍎'
+      return '🍱'
+  }
 
   return (
     <div className="max-w-7xl mx-auto p-6 md:p-10 space-y-12">
@@ -132,10 +177,10 @@ export default function Dashboard() {
               <span className="font-bold uppercase tracking-widest text-xs" style={{ color: 'var(--color-on-tertiary-container)' }}>Habit Insight Nudge</span>
             </div>
             <h2 className="text-2xl font-extrabold font-headline leading-tight mb-3" style={{ color: 'var(--color-on-tertiary-container)' }}>
-              You've had high-sugar snacks 3 times this week around 3 PM.
+              {nudge?.title || "Habit Insight Nudge"}
             </h2>
             <p className="text-lg mb-6 leading-relaxed" style={{ color: 'rgba(88,69,0,0.8)' }}>
-              Tomorrow, try swapping the candy for an apple to avoid the 4 PM crash.
+              {nudge?.message || "Analyzing your recent nutrition patterns..."} {nudge?.suggestion}
             </p>
             <div className="flex flex-wrap gap-3">
               <button
@@ -205,7 +250,27 @@ export default function Dashboard() {
           <button className="font-bold text-sm hover:underline" style={{ color: 'var(--color-primary)' }}>View History</button>
         </div>
         <div className="space-y-4">
-          {logs.map(log => <MealLogRow key={log.name} {...log} />)}
+          {recentLogs?.length > 0 ? (
+            recentLogs.map(log => (
+              <MealLogRow 
+                key={log.id} 
+                emoji={getLogEmoji(log.items?.[0]?.name || 'Meal')} 
+                name={log.items?.[0]?.name || 'Meal'} 
+                time={formatLogTime(log.timestamp)} 
+                meal="Logged Meal"
+                tag={log.forecast || 'Analyzed'}
+                tagStyle={{ 
+                  backgroundColor: log.forecast === 'balanced' ? 'var(--color-secondary-container)' : 'rgba(251,81,81,0.12)', 
+                  color: log.forecast === 'balanced' ? 'var(--color-on-secondary-container)' : 'var(--color-error)' 
+                }}
+                kcal={Math.round(log.calories)} 
+                protein={Math.round(log.protein)} 
+                carbs={Math.round(log.carbs)} 
+              />
+            ))
+          ) : (
+            <p className="text-center py-10 text-sm" style={{ color: 'var(--color-outline)' }}>No logs yet today. Scan a meal to get started!</p>
+          )}
         </div>
       </section>
 
