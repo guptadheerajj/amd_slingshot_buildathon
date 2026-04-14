@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#eebe00",
+                        "on-secondary-container": "#005d4e",
+                        "on-tertiary-container": "#584500",
+                        "surface-bright": "#f8f6f1",
+                        "inverse-primary": "#fa783e",
+                        "on-primary": "#ffefea",
+                        "surface-container-high": "#e4e2dd",
+                        "primary": "#a13a00",
+                        "on-tertiary": "#fff1d5",
+                        "primary-container": "#fd7b40",
+                        "inverse-surface": "#0e0e0c",
+                        "on-surface-variant": "#5c5c58",
+                        "surface-container-highest": "#deddd7",
+                        "tertiary-fixed": "#fecb00",
+                        "secondary-dim": "#005a4c",
+                        "on-tertiary-fixed-variant": "#634e00",
+                        "primary-dim": "#8d3200",
+                        "on-secondary-fixed-variant": "#006857",
+                        "surface-container-low": "#f2f1eb",
+                        "surface-dim": "#d5d5ce",
+                        "error-container": "#fb5151",
+                        "tertiary-container": "#fecb00",
+                        "inverse-on-surface": "#9e9d99",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary": "#c3ffee",
+                        "on-error-container": "#570008",
+                        "secondary-fixed": "#96f4dc",
+                        "on-secondary-fixed": "#00483c",
+                        "primary-fixed": "#fd7b40",
+                        "secondary-fixed-dim": "#88e6ce",
+                        "surface": "#f8f6f1",
+                        "error-dim": "#9f0519",
+                        "on-primary-container": "#431300",
+                        "error": "#b31b25",
+                        "on-primary-fixed-variant": "#521a00",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-dim": "#624d00",
+                        "on-error": "#ffefee",
+                        "surface-tint": "#a13a00",
+                        "surface-variant": "#deddd7",
+                        "surface-container": "#eae8e3",
+                        "tertiary": "#705900",
+                        "primary-fixed-dim": "#ec6e35",
+                        "secondary-container": "#96f4dc",
+                        "on-background": "#2e2f2c",
+                        "background": "#f8f6f1",
+                        "outline-variant": "#aeada9",
+                        "on-tertiary-fixed": "#413200",
+                        "outline": "#777773",
+                        "secondary": "#006857",
+                        "on-surface": "#2e2f2c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .scanning-line {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, #006857, #96f4dc, #006857, transparent);
+            box-shadow: 0 0 15px 2px #006857;
+            animation: scan 3s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-stone-50 dark:bg-stone-950 tonal-shift bg-stone-100 dark:bg-stone-900 border-none z-40 hidden md:flex flex-col p-6 gap-2 font-plus-jakarta text-base">
+<div class="text-xl font-bold text-orange-800 dark:text-orange-500 mb-8 tracking-tight">NutriLens</div>
+<nav class="space-y-2 flex-grow">
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:text-orange-600 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:text-orange-600 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span>History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:text-orange-600 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span>Recipes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:text-orange-600 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Profile</span>
+</a>
+</nav>
+<button class="mt-auto w-full py-4 bg-primary-container text-on-primary-container font-bold rounded-xl shadow-sm hover:scale-95 active:opacity-80 duration-200">
+            Scan Meal
+        </button>
+</aside>
+<!-- Main Wrapper for Content and Top Bar -->
+<div class="md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface/80 backdrop-blur-md dark:bg-stone-900/80 shadow-sm dark:shadow-none border-none docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-[1440px] mx-auto font-plus-jakarta text-sm tracking-tight">
+<div class="text-2xl font-bold text-orange-800 dark:text-orange-500 tracking-tight">NutriLens</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex bg-surface-container-highest rounded-full px-4 py-1.5 items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs w-48" placeholder="Search insights..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-stone-600 hover:bg-stone-100/50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-stone-600 hover:bg-stone-100/50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full ml-2 border-2 border-primary-container" data-alt="Close-up portrait of a professional man with a friendly smile, clean studio background, soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0hFK5Ri4ioHJwdz4LX2d-VnzdsaJkTyx8IWopDdZivjStMQOlYOxYzklE8HYYVJqbs_WIRi7CsC2Ii-uLTIALZsvm1fc0BhpxPMf8WNScmQNVCx1xN4Of5ocijteOaquvkwN7aylklQJveY5AoK2hJQR8FZM60SqrfUohtfAKlBZ0gB0GbpFYcLXooD2nsUYTL5jbXrZfYJgEr27-Oz0Rb6SMqOQPNubFLa71NJOTe2UMB8Opwp4V3299YSKdtbJP2PKOMtE-ToE"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area: Analysis Loading Screen -->
+<main class="flex-grow flex flex-col items-center justify-center p-8 relative">
+<!-- Analysis Canvas -->
+<div class="w-full max-w-5xl flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+<!-- Left: The Meal Image with Scanning Effect -->
+<div class="relative w-full md:w-1/2 aspect-square rounded-3xl overflow-hidden shadow-2xl group border-4 border-surface-container">
+<img alt="Captured Meal" class="w-full h-full object-cover brightness-75 scale-105 transition-transform duration-1000" data-alt="Gourmet healthy bowl with salmon, avocado, quinoa, and fresh greens on a minimalist ceramic plate, bright soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARk_QNXJvuRPKs_Iw5j6GwX1R407hFIQFTyp9PZtX8AWyCJKgn7Oi8TeAm5Qj8VTTPfz5Crxpau37qlVQWviJ-Q0zN8I9MmCJLwIOkY6igQZ1oJ59M5ejK8owTEDAIrRNN4-L77Xigw61TLB6xk6dksRjamQT6032dRgFnPaHzWHRNVGEGUJyof_eCLqe_l66mcWaEE5CqWtSFJjjXCZvJvfku_Zap-kz_Lm-aTBbqRoLyia_fgrNdzvBXXmyhY3mN0LPBAv7C8gE"/>
+<!-- Gradient Overlay for Contrast -->
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
+<!-- Animated Scanning Laser -->
+<div class="scanning-line"></div>
+<!-- AI Recognition Markers (Editorial Decorative Elements) -->
+<div class="absolute top-1/4 left-1/3 p-2 bg-secondary/80 backdrop-blur-md rounded-lg text-white text-[10px] font-bold flex items-center gap-1.5 border border-secondary-fixed/30">
+<span class="w-1.5 h-1.5 bg-secondary-fixed rounded-full animate-pulse"></span>
+                        PROTEIN: SALMON
+                    </div>
+<div class="absolute bottom-1/3 right-1/4 p-2 bg-secondary/80 backdrop-blur-md rounded-lg text-white text-[10px] font-bold flex items-center gap-1.5 border border-secondary-fixed/30">
+<span class="w-1.5 h-1.5 bg-secondary-fixed rounded-full animate-pulse"></span>
+                        LIPID: AVOCADO
+                    </div>
+</div>
+<!-- Right: Loading Sequence & Status -->
+<div class="w-full md:w-1/2 flex flex-col justify-center text-center md:text-left space-y-8">
+<div class="space-y-2">
+<p class="text-secondary font-semibold tracking-widest text-sm uppercase">Clinical Analysis in Progress</p>
+<h1 class="text-4xl lg:text-5xl font-headline font-extrabold text-on-surface leading-tight">
+                            Mapping Your <br/>
+<span class="text-primary italic">Nutritional Matrix.</span>
+</h1>
+</div>
+<!-- Loading Sequence Stepper -->
+<div class="space-y-6">
+<!-- Active State -->
+<div class="flex items-center gap-4 group">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary relative">
+<span class="material-symbols-outlined text-xl" data-icon="biotech">biotech</span>
+<div class="absolute inset-0 rounded-full border-2 border-secondary border-t-transparent animate-spin"></div>
+</div>
+<span class="text-xl font-headline font-semibold text-on-surface">Identifying ingredients...</span>
+</div>
+<!-- Waiting States (Editorial subtle styling) -->
+<div class="flex items-center gap-4 opacity-40">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-xl" data-icon="calculate">calculate</span>
+</div>
+<span class="text-xl font-headline font-medium">Calculating macros...</span>
+</div>
+<div class="flex items-center gap-4 opacity-40">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-xl" data-icon="query_stats">query_stats</span>
+</div>
+<span class="text-xl font-headline font-medium">Analyzing historical impact...</span>
+</div>
+<div class="flex items-center gap-4 opacity-40">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-xl" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<span class="text-xl font-headline font-medium">Generating forecast...</span>
+</div>
+</div>
+<!-- Progress Indicator -->
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-container w-1/3 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Bottom Floating Proactive Nudge (Bento Style) -->
+<div class="mt-16 w-full max-w-4xl p-6 bg-tertiary-container/20 rounded-3xl border border-tertiary-fixed/10 backdrop-blur-sm flex items-center gap-6">
+<div class="w-14 h-14 bg-tertiary-container rounded-2xl flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-tertiary-container text-2xl" data-icon="lightbulb">lightbulb</span>
+</div>
+<div class="flex-grow">
+<p class="text-on-tertiary-container font-headline font-bold text-lg">Did you know?</p>
+<p class="text-on-tertiary-container/80 text-sm leading-relaxed">Scanning within 15 minutes of eating helps our clinical engine better align your glycemic response with your activity data.</p>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Suppressed as per Task Intent (Desktop Focus) -->
+<!-- The BottomNavBar is suppressed due to Task and Shell Visibility rules -->
+</body></html>

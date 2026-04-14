@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NutriLens | Meal Scanning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#eebe00",
+                        "on-secondary-container": "#005d4e",
+                        "on-tertiary-container": "#584500",
+                        "surface-bright": "#f8f6f1",
+                        "inverse-primary": "#fa783e",
+                        "on-primary": "#ffefea",
+                        "surface-container-high": "#e4e2dd",
+                        "primary": "#a13a00",
+                        "on-tertiary": "#fff1d5",
+                        "primary-container": "#fd7b40",
+                        "inverse-surface": "#0e0e0c",
+                        "on-surface-variant": "#5c5c58",
+                        "surface-container-highest": "#deddd7",
+                        "tertiary-fixed": "#fecb00",
+                        "secondary-dim": "#005a4c",
+                        "on-tertiary-fixed-variant": "#634e00",
+                        "primary-dim": "#8d3200",
+                        "on-secondary-fixed-variant": "#006857",
+                        "surface-container-low": "#f2f1eb",
+                        "surface-dim": "#d5d5ce",
+                        "error-container": "#fb5151",
+                        "tertiary-container": "#fecb00",
+                        "inverse-on-surface": "#9e9d99",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary": "#c3ffee",
+                        "on-error-container": "#570008",
+                        "secondary-fixed": "#96f4dc",
+                        "on-secondary-fixed": "#00483c",
+                        "primary-fixed": "#fd7b40",
+                        "secondary-fixed-dim": "#88e6ce",
+                        "surface": "#f8f6f1",
+                        "error-dim": "#9f0519",
+                        "on-primary-container": "#431300",
+                        "error": "#b31b25",
+                        "on-primary-fixed-variant": "#521a00",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-dim": "#624d00",
+                        "on-error": "#ffefee",
+                        "surface-tint": "#a13a00",
+                        "surface-variant": "#deddd7",
+                        "surface-container": "#eae8e3",
+                        "tertiary": "#705900",
+                        "primary-fixed-dim": "#ec6e35",
+                        "secondary-container": "#96f4dc",
+                        "on-background": "#2e2f2c",
+                        "background": "#f8f6f1",
+                        "outline-variant": "#aeada9",
+                        "on-tertiary-fixed": "#413200",
+                        "outline": "#777773",
+                        "secondary": "#006857",
+                        "on-surface": "#2e2f2c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scanning-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fd7b40, transparent);
+            animation: scan 3s ease-in-out infinite;
+        }
+        @keyframes scan {
+            0%, 100% { top: 0%; }
+            50% { top: 100%; }
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface/80 backdrop-blur-md dark:bg-stone-900/80 shadow-sm dark:shadow-none docked full-width top-0 sticky z-50 border-none">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-[1440px] mx-auto">
+<div class="text-2xl font-bold text-orange-800 dark:text-orange-500 tracking-tight">NutriLens</div>
+<div class="hidden md:flex items-center gap-8 font-plus-jakarta text-sm tracking-tight">
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 transition-colors" href="#">Dashboard</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 transition-colors" href="#">Explore</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 transition-colors" href="#">History</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-stone-100/50 dark:hover:bg-stone-800/50 transition-colors rounded-full scale-95 active:opacity-80 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-stone-100/50 dark:hover:bg-stone-800/50 transition-colors rounded-full scale-95 active:opacity-80 duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/20">
+<img alt="User profile avatar" data-alt="close up of a professional young man in a clean white laboratory or clinical setting smiling warmly" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8tLxLrJ-fk6ritQyX3ANOFwZa_0NNhSNTW2LBt3LjEJJqEOcl0dekw3_QQmd5h3nkdPytP0sdfcBKEXfchPhM_-SQybee2kSpbMrgMYXGBIAOn-Yj8npacIBr3jaMhH47FNNMPy4YUuH7r7MKNYI1xQmOteCIW0M_MO29puIzyXzoFkEjT2h-oIs1Tyoq9NUjfuRWPr650LIu0ey7r5qhowhrH0YbtYsEJG_0xqZwq6Fp84bzg4_HWqHeFes0ObRmJyylR2SFCVY"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-stone-50 dark:bg-stone-950 h-screen w-64 fixed left-0 top-0 overflow-y-auto tonal-shift bg-stone-100 dark:bg-stone-900 hidden md:block pt-20">
+<div class="flex flex-col p-6 gap-2">
+<div class="text-xl font-bold text-orange-800 dark:text-orange-500 mb-8">NutriLens</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:text-orange-600 hover:translate-x-1 transition-transform duration-200 font-plus-jakarta text-base" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                        Dashboard
+                    </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:text-orange-600 hover:translate-x-1 transition-transform duration-200 font-plus-jakarta text-base" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+                        History
+                    </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:text-orange-600 hover:translate-x-1 transition-transform duration-200 font-plus-jakarta text-base" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+                        Recipes
+                    </a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-500 dark:text-stone-400 hover:text-orange-600 hover:translate-x-1 transition-transform duration-200 font-plus-jakarta text-base" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+                        Profile
+                    </a>
+</nav>
+<div class="mt-12 p-4 rounded-xl bg-orange-50 dark:bg-orange-900/20">
+<p class="text-xs font-bold text-orange-800 dark:text-orange-300 uppercase tracking-widest mb-2">Pro Tip</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">Natural light provides 40% more accurate scanning results.</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-6 lg:p-12">
+<div class="max-w-5xl mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="text-4xl font-extrabold headline text-on-surface tracking-tight leading-none mb-2">Meal Scanning</h1>
+<p class="text-on-surface-variant text-lg">Align your meal within the frame for a clinical nutritional analysis.</p>
+</div>
+<button class="bg-surface-container-low text-primary px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+                        Upload from Computer
+                    </button>
+</div>
+<!-- Bento Grid Layout for Viewfinder and Context -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Viewfinder Canvas -->
+<div class="lg:col-span-8 relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-stone-900 shadow-2xl group">
+<img alt="Live camera feed showing a bowl of pasta" class="absolute inset-0 w-full h-full object-cover opacity-80" data-alt="a high-overhead shot of a gourmet bowl of spaghetti carbonara with fresh herbs on a rustic wooden table under warm studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdFn0_liNakQegHrwxqt-S5bPJxa_vJdQDrpDrpTZrLb4mOwQgL9bEJ9g8DUshDdRzw1gwh_Gdt5lyK3cWsNW6qGuaQPW2_DANbIKAvrREsTjr1IFnd0o8FO7iR_5ZQU0kDCtI9TLmW9KgzKxmQEEbpxMm2h2hh0a2w4iUn7uU8KQ_qfFgyPFDrEY2nKv6NWPhIzbmzAx5wuDo93BWD0PhVdxxf_QJqbKBgvv3CKJPsuiEt4oEwWYxtU7dkqcDFmjlzmZH7Z2wVw4"/>
+<!-- Scanning UI Overlays -->
+<div class="absolute inset-0 pointer-events-none">
+<!-- Scanning Line Animation -->
+<div class="absolute w-full scanning-line z-10"></div>
+<!-- Corner Brackets -->
+<div class="absolute top-8 left-8 w-12 h-12 border-t-4 border-l-4 border-primary-container rounded-tl-xl opacity-80"></div>
+<div class="absolute top-8 right-8 w-12 h-12 border-t-4 border-r-4 border-primary-container rounded-tr-xl opacity-80"></div>
+<div class="absolute bottom-8 left-8 w-12 h-12 border-b-4 border-l-4 border-primary-container rounded-bl-xl opacity-80"></div>
+<div class="absolute bottom-8 right-8 w-12 h-12 border-b-4 border-r-4 border-primary-container rounded-br-xl opacity-80"></div>
+<!-- Floating AI Labels -->
+<div class="absolute top-1/3 left-1/4 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-4 py-2 flex items-center gap-2 text-white shadow-lg">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="font-bold text-sm tracking-tight">Bowl of pasta [88%]</span>
+</div>
+<div class="absolute bottom-1/4 right-1/3 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-4 py-2 flex items-center gap-2 text-white shadow-lg">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<span class="font-bold text-sm tracking-tight">Grated Parmesan [94%]</span>
+</div>
+<!-- Scanning Status -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-on-surface/90 text-white px-6 py-2 rounded-full">
+<span class="flex h-2 w-2 rounded-full bg-orange-500 animate-pulse"></span>
+<span class="text-sm font-semibold headline tracking-wide uppercase">Scanning...</span>
+</div>
+</div>
+<!-- Camera Controls Interface -->
+<div class="absolute bottom-0 inset-x-0 p-8 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-between">
+<button class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/20 transition-all border border-white/20">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</button>
+<button class="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center group active:scale-90 transition-transform">
+<div class="w-16 h-16 rounded-full bg-white group-hover:bg-primary-container transition-colors"></div>
+</button>
+<button class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/20 transition-all border border-white/20">
+<span class="material-symbols-outlined" data-icon="cameraswitch">cameraswitch</span>
+</button>
+</div>
+</div>
+<!-- Right Panel: Proactive Insights (Nudge Cards) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- AI Insights Card -->
+<div class="bg-tertiary-container/30 p-8 rounded-[2rem] border border-tertiary-fixed-dim/20">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-tertiary" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h3 class="font-bold headline text-lg text-on-tertiary-container">Clinical Insights</h3>
+</div>
+<p class="text-on-tertiary-container mb-6 leading-relaxed">We've detected a high-carb Mediterranean dish. Consider adding a side of leafy greens to lower the glycemic response.</p>
+<div class="space-y-3">
+<div class="bg-white/50 p-4 rounded-xl flex justify-between items-center">
+<span class="text-sm font-semibold">Estimated Calories</span>
+<span class="text-lg font-bold headline text-primary">640 kcal</span>
+</div>
+<div class="bg-white/50 p-4 rounded-xl flex justify-between items-center">
+<span class="text-sm font-semibold">Protein Content</span>
+<span class="text-lg font-bold headline text-secondary">24g</span>
+</div>
+</div>
+</div>
+<!-- Macro Breakdown Card -->
+<div class="bg-surface-container-low p-8 rounded-[2rem] relative overflow-hidden group">
+<div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+<h3 class="font-bold headline text-lg text-on-surface mb-6">Real-time Macros</h3>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+<span>Carbohydrates</span>
+<span>65%</span>
+</div>
+<div class="h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[65%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+<span>Fats</span>
+<span>20%</span>
+</div>
+<div class="h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim w-[20%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+<span>Protein</span>
+<span>15%</span>
+</div>
+<div class="h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[15%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Scan Mini-List -->
+<div class="p-4">
+<h4 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-4">Previous Scans Today</h4>
+<div class="flex gap-4">
+<div class="w-16 h-16 rounded-2xl overflow-hidden shadow-sm">
+<img alt="Breakfast scan" data-alt="vibrant breakfast bowl with yogurt, granola, and fresh berries shot in soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0J-b35CgQPD7b8C94byWFNGe3sHF3IRQB-NLxF82DNMsyo80SPnnKSpvvnxIifdEDEEGOx6_tFgdHaelEXFSi0AADOuYdmdL5GGowulWaRgh5jtpoiUBLvd_kCgoBePOJ_mDyTE9TnHTlMVEH7U-t_ISpZPznwgwzkhchj2EIi3msGZfpi7otWny7u1uUyOFa1OzYE5rO3BxhmE4xmPKqA47QPKGlJZcos_PZc682vptRh8Y3btN4KTXA5qLml_oxmF9j7jwUtvs"/>
+</div>
+<div class="w-16 h-16 rounded-2xl overflow-hidden shadow-sm grayscale opacity-50">
+<img alt="Snack scan" data-alt="overhead view of a sliced apple and a handful of almonds on a clean marble surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdRyCiCmIsS_WHnmJXDdOsFV5Ivbwy7-140QTIgrbMXqUkUvGWIWrfRg_GqIrmV7HuPVHoeaUYnmYsNzaHYMy7LQS90cJV48tQ5OQNEKPzDApw7154vWdJN6CXD1OL8LeBa91EfbBLkru4dEQCKrjOcfFRk19tT6-YYB1D9gZHZnc2JDeGMrc_99hAJsHeg-GJP5zq-H1_atd-8tKx96bi9Z7ev490S-RozP-_GtqPW2jhIGaWkDrWdht5vhqY4xO175iPT56GgTo"/>
+</div>
+<div class="w-16 h-16 rounded-2xl border-2 border-dashed border-outline-variant flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Shell (Suppressed on large screens) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-surface/80 backdrop-blur-xl border-none p-4 flex justify-around items-center z-50">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="camera" style="font-variation-settings: 'FILL' 1;">camera</span>
+<span class="text-[10px] font-bold uppercase">Scan</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-stone-500">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-bold uppercase">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-stone-500">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="text-[10px] font-bold uppercase">Logs</span>
+</button>
+</nav>
+</body></html>

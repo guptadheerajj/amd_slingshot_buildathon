@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NutriLens Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#eebe00",
+                        "on-secondary-container": "#005d4e",
+                        "on-tertiary-container": "#584500",
+                        "surface-bright": "#f8f6f1",
+                        "inverse-primary": "#fa783e",
+                        "on-primary": "#ffefea",
+                        "surface-container-high": "#e4e2dd",
+                        "primary": "#a13a00",
+                        "on-tertiary": "#fff1d5",
+                        "primary-container": "#fd7b40",
+                        "inverse-surface": "#0e0e0c",
+                        "on-surface-variant": "#5c5c58",
+                        "surface-container-highest": "#deddd7",
+                        "tertiary-fixed": "#fecb00",
+                        "secondary-dim": "#005a4c",
+                        "on-tertiary-fixed-variant": "#634e00",
+                        "primary-dim": "#8d3200",
+                        "on-secondary-fixed-variant": "#006857",
+                        "surface-container-low": "#f2f1eb",
+                        "surface-dim": "#d5d5ce",
+                        "error-container": "#fb5151",
+                        "tertiary-container": "#fecb00",
+                        "inverse-on-surface": "#9e9d99",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary": "#c3ffee",
+                        "on-error-container": "#570008",
+                        "secondary-fixed": "#96f4dc",
+                        "on-secondary-fixed": "#00483c",
+                        "primary-fixed": "#fd7b40",
+                        "secondary-fixed-dim": "#88e6ce",
+                        "surface": "#f8f6f1",
+                        "error-dim": "#9f0519",
+                        "on-primary-container": "#431300",
+                        "error": "#b31b25",
+                        "on-primary-fixed-variant": "#521a00",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-dim": "#624d00",
+                        "on-error": "#ffefee",
+                        "surface-tint": "#a13a00",
+                        "surface-variant": "#deddd7",
+                        "surface-container": "#eae8e3",
+                        "tertiary": "#705900",
+                        "primary-fixed-dim": "#ec6e35",
+                        "secondary-container": "#96f4dc",
+                        "on-background": "#2e2f2c",
+                        "background": "#f8f6f1",
+                        "outline-variant": "#aeada9",
+                        "on-tertiary-fixed": "#413200",
+                        "outline": "#777773",
+                        "secondary": "#006857",
+                        "on-surface": "#2e2f2c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .tonal-shift { transition: background-color 0.3s ease; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-stone-50 dark:bg-stone-950 flex flex-col p-6 gap-2 z-50 hidden md:flex">
+<div class="text-xl font-bold text-orange-800 dark:text-orange-500 mb-8 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="lens">lens</span>
+<span>NutriLens</span>
+</div>
+<nav class="flex flex-col gap-1">
+<!-- Active: Dashboard -->
+<a class="text-orange-800 dark:text-orange-300 font-bold bg-orange-50 dark:bg-orange-900/20 rounded-xl flex items-center gap-3 px-4 py-3 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-plus-jakarta text-base">Dashboard</span>
+</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-orange-600 flex items-center gap-3 px-4 py-3 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-plus-jakarta text-base">History</span>
+</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-orange-600 flex items-center gap-3 px-4 py-3 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="restaurant_menu">restaurant_menu</span>
+<span class="font-plus-jakarta text-base">Recipes</span>
+</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-orange-600 flex items-center gap-3 px-4 py-3 hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-plus-jakarta text-base">Profile</span>
+</a>
+</nav>
+<div class="mt-auto pt-8">
+<div class="bg-primary p-4 rounded-xl shadow-lg shadow-primary/20 text-on-primary">
+<p class="text-xs font-semibold uppercase tracking-wider mb-2 opacity-80">Pro Concierge</p>
+<p class="text-sm mb-4 leading-relaxed">Upgrade to unlock clinical macro-precision.</p>
+<button class="bg-surface-container-lowest text-primary font-bold py-2 px-4 rounded-full text-xs w-full">Upgrade Now</button>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Shell -->
+<header class="bg-surface/80 backdrop-blur-md dark:bg-stone-900/80 shadow-sm dark:shadow-none docked full-width top-0 sticky z-40">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-[1440px] mx-auto md:pl-72">
+<h1 class="text-2xl font-bold text-orange-800 dark:text-orange-500 tracking-tight font-plus-jakarta">Dashboard</h1>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="search">search</span>
+<input class="bg-surface-container-highest border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary w-64" placeholder="Search data..." type="text"/>
+</div>
+<button class="p-2 rounded-full hover:bg-stone-100/50 dark:hover:bg-stone-800/50 transition-colors">
+<span class="material-symbols-outlined text-stone-600" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-stone-100/50 dark:hover:bg-stone-800/50 transition-colors">
+<span class="material-symbols-outlined text-stone-600" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile avatar" data-alt="professional male portrait with soft studio lighting and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjb4jreEMFsyZFx2ZiJGPtgnHUzSWR_4PmX3rVOoSGkyJe8BEJFYwEIhwQE2HJtCimF6h22POjrABDalMUTFMiRiEsb_gqxgLAsKD8OlJggN8gHC2WfRMY2sLFBv1vvL66EOmuhJbO3uXzV0lRVKLIigKzwPIcWoV5lF851p2dgaJVxisy1lG-6zw2MJoBSWMx2u8-NqNHswiezqrs5hk47rTc9WDcn_o8seQBZTq4e4ZDg0S0xOkPz6oKUpEsf1PZtZvs8wI6u1A"/>
+</div>
+</div>
+</div>
+</header>
+<main class="md:pl-64 min-h-screen">
+<div class="max-w-7xl mx-auto p-6 md:p-10">
+<!-- Hero Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+<!-- Habit Insight Nudge (Hero) -->
+<section class="lg:col-span-8 bg-tertiary-container rounded-xl p-8 flex flex-col md:flex-row gap-6 relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10 scale-150">
+<span class="material-symbols-outlined text-on-tertiary-container text-[120px]" data-icon="lightbulb">lightbulb</span>
+</div>
+<div class="flex-1 z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="tips_and_updates">tips_and_updates</span>
+<span class="font-bold text-on-tertiary-container uppercase tracking-widest text-xs">Habit Insight Nudge</span>
+</div>
+<h2 class="text-2xl font-bold text-on-tertiary-container mb-4 font-headline leading-tight">Insight: You’ve had high-sugar snacks 3 times this week around 3 PM.</h2>
+<p class="text-on-tertiary-container/80 text-lg mb-6 leading-relaxed">Tomorrow, try swapping the candy for an apple to avoid the 4 PM crash.</p>
+<div class="flex flex-wrap gap-3">
+<button class="bg-on-tertiary-container text-surface-container-lowest font-bold px-6 py-3 rounded-full text-sm shadow-lg shadow-on-tertiary-container/20 active:scale-95 transition-all">Set Reminder</button>
+<button class="text-on-tertiary-container font-semibold px-6 py-3 rounded-full text-sm hover:bg-on-tertiary-container/10 transition-colors">Dismiss</button>
+</div>
+</div>
+</section>
+<!-- Quick Action: Scan Meal -->
+<section class="lg:col-span-4 bg-primary rounded-xl p-8 text-on-primary flex flex-col justify-between group cursor-pointer active:scale-95 transition-all">
+<div class="w-16 h-16 bg-on-primary/10 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-4xl" data-icon="photo_camera" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</div>
+<div>
+<h3 class="text-2xl font-bold font-headline mb-2">Scan Meal</h3>
+<p class="text-on-primary/70 mb-6">Log your nutrition instantly with NutriLens AI.</p>
+<div class="flex items-center gap-2 font-bold">
+<span>Get Started</span>
+<span class="material-symbols-outlined group-hover:translate-x-2 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Daily Summary Section -->
+<section class="mb-12">
+<div class="flex items-end justify-between mb-8">
+<div>
+<p class="text-primary font-bold uppercase tracking-widest text-xs mb-1">Today's Progress</p>
+<h2 class="text-3xl font-extrabold font-headline text-on-surface">Daily Summary</h2>
+</div>
+<p class="text-outline font-medium">Monday, May 12</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<!-- Calories -->
+<div class="bg-surface-container-low rounded-xl p-6 text-center group hover:bg-surface-container transition-colors">
+<div class="relative w-24 h-24 mx-auto mb-4">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-outline-variant/30" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-primary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="37.68" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-bold text-xl text-primary">85%</span>
+</div>
+</div>
+<p class="font-bold text-on-surface mb-1">Calories</p>
+<p class="text-xs text-outline">1,850 / 2,200 kcal</p>
+</div>
+<!-- Protein -->
+<div class="bg-surface-container-low rounded-xl p-6 text-center group hover:bg-surface-container transition-colors">
+<div class="relative w-24 h-24 mx-auto mb-4">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-outline-variant/30" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-secondary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="100.48" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-bold text-xl text-secondary">60%</span>
+</div>
+</div>
+<p class="font-bold text-on-surface mb-1">Protein</p>
+<p class="text-xs text-outline">90g / 150g</p>
+</div>
+<!-- Carbs -->
+<div class="bg-surface-container-low rounded-xl p-6 text-center group hover:bg-surface-container transition-colors">
+<div class="relative w-24 h-24 mx-auto mb-4">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-outline-variant/30" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-tertiary" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="150.72" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-bold text-xl text-tertiary">40%</span>
+</div>
+</div>
+<p class="font-bold text-on-surface mb-1">Carbs</p>
+<p class="text-xs text-outline">120g / 300g</p>
+</div>
+<!-- Fats -->
+<div class="bg-surface-container-low rounded-xl p-6 text-center group hover:bg-surface-container transition-colors">
+<div class="relative w-24 h-24 mx-auto mb-4">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-outline-variant/30" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-on-surface" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="125.6" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-bold text-xl text-on-surface">50%</span>
+</div>
+</div>
+<p class="font-bold text-on-surface mb-1">Fats</p>
+<p class="text-xs text-outline">35g / 70g</p>
+</div>
+</div>
+</section>
+<!-- Recent Logs Section -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-2xl font-bold font-headline text-on-surface">Recent Logs</h2>
+<button class="text-primary font-bold text-sm hover:underline">View History</button>
+</div>
+<div class="space-y-4">
+<!-- Breakfast Log -->
+<div class="bg-surface-container-lowest rounded-xl p-4 flex items-center gap-6 shadow-sm group hover:shadow-md transition-shadow">
+<div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="vibrant breakfast bowl with avocado, poached eggs, and colorful microgreens on a white plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUQ4cwHyxSEga1OwhekdAsGNLQvziWxUeZ6D9jmyFSjOTJMtJlSJDgXGxB8XZrilQPXbdA3eIh605fDE5Rxqil2OzEvpHR-Gieo3V9kZuV3YKAW9Ijrql2UZxirS7wZhmjP49zMEAHkIZiQ3dn6YCNJDY2T_geNESWQlYbGezZxyEQKtrUY8F5U_eu9lgR6ciK2xlIrOVj5lXuITlnz5nldLDPp1G3ARApEEONtflwf2bkfkHU-i3F6ea20Gp98DqEVRON9nZ2vn8"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<div>
+<h4 class="font-bold text-on-surface text-lg">Avocado Toast &amp; Egg</h4>
+<p class="text-xs text-outline">Breakfast • 8:30 AM</p>
+</div>
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">High Protein</span>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-xs font-semibold">420 kcal</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-xs font-semibold">18g P</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-xs font-semibold">32g C</span>
+</div>
+</div>
+</div>
+<button class="p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<!-- Lunch Log -->
+<div class="bg-surface-container-lowest rounded-xl p-4 flex items-center gap-6 shadow-sm group hover:shadow-md transition-shadow">
+<div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="mediterranean chicken salad with quinoa, cucumbers, and feta cheese in a ceramic bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkgFfH3msWkQD6O266ZfG2Ri-Tz63AjFw9jvANaXZUJ_Ko7nqcNl3PxopDl3Tvu7x0FUo3HbEjsVBQQESEdVfQ5xjr81Z_CdET1gIszoiU0OC-A6dQv0oGECw3YstWSF3BBlkGJd7PStQuyFFOD05M3t7_tOcwMDf85jRYLJVEx8jA6nmrWKEQnMBwqjX5bbiF4h00QvGMgPqIQDuZ7qnGcBYst8tQeHHQ8erLoEatCgRMXrS5QH00A5AmN6ovXd8TYfU8LgUnDCo"/>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<div>
+<h4 class="font-bold text-on-surface text-lg">Quinoa Chicken Salad</h4>
+<p class="text-xs text-outline">Lunch • 1:15 PM</p>
+</div>
+<span class="bg-surface-container text-on-surface-variant text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Balanced</span>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-xs font-semibold">580 kcal</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-xs font-semibold">34g P</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-xs font-semibold">45g C</span>
+</div>
+</div>
+</div>
+<button class="p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- FAB for Scan Meal (Mobile only fallback) -->
+<button class="md:hidden fixed bottom-6 right-6 bg-primary text-on-primary w-14 h-14 rounded-full shadow-2xl flex items-center justify-center z-50">
+<span class="material-symbols-outlined text-3xl" data-icon="photo_camera" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+</button>
+</body></html>
