@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  name      String?
+  streak    Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  mealLogs  MealLog[]
+}
+
+model MealLog {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  imageUrl    String?
+  items       Json?    // Array of detected items: { name: string, calories: number, ... }
+  calories    Float    @default(0)
+  protein     Float    @default(0)
+  carbs       Float    @default(0)
+  fats        Float    @default(0)
+  sugar       Float    @default(0)
+  timestamp   DateTime @default(now())
+  
+  // Predictive forecast outcome
+  forecast    String?  // Sluggish, Stable Energy, etc.
+}

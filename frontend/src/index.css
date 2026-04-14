@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Color Palette (from DESIGN.md & Stitch) ── */
+  --color-primary: #a13a00;
+  --color-primary-container: #fd7b40;
+  --color-primary-fixed: #fd7b40;
+  --color-primary-fixed-dim: #ec6e35;
+  --color-primary-dim: #8d3200;
+  --color-inverse-primary: #fa783e;
+  --color-on-primary: #ffefea;
+  --color-on-primary-container: #431300;
+  --color-on-primary-fixed: #000000;
+  --color-on-primary-fixed-variant: #521a00;
+
+  --color-secondary: #006857;
+  --color-secondary-container: #96f4dc;
+  --color-secondary-fixed: #96f4dc;
+  --color-secondary-fixed-dim: #88e6ce;
+  --color-secondary-dim: #005a4c;
+  --color-on-secondary: #c3ffee;
+  --color-on-secondary-container: #005d4e;
+  --color-on-secondary-fixed: #00483c;
+  --color-on-secondary-fixed-variant: #006857;
+
+  --color-tertiary: #705900;
+  --color-tertiary-container: #fecb00;
+  --color-tertiary-fixed: #fecb00;
+  --color-tertiary-fixed-dim: #eebe00;
+  --color-tertiary-dim: #624d00;
+  --color-on-tertiary: #fff1d5;
+  --color-on-tertiary-container: #584500;
+  --color-on-tertiary-fixed: #413200;
+  --color-on-tertiary-fixed-variant: #634e00;
+
+  --color-surface: #f8f6f1;
+  --color-surface-bright: #f8f6f1;
+  --color-surface-dim: #d5d5ce;
+  --color-surface-container: #eae8e3;
+  --color-surface-container-low: #f2f1eb;
+  --color-surface-container-high: #e4e2dd;
+  --color-surface-container-highest: #deddd7;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-variant: #deddd7;
+  --color-surface-tint: #a13a00;
+
+  --color-on-surface: #2e2f2c;
+  --color-on-surface-variant: #5c5c58;
+  --color-inverse-surface: #0e0e0c;
+  --color-inverse-on-surface: #9e9d99;
+
+  --color-background: #f8f6f1;
+  --color-on-background: #2e2f2c;
+
+  --color-outline: #777773;
+  --color-outline-variant: #aeada9;
+
+  --color-error: #b31b25;
+  --color-error-container: #fb5151;
+  --color-error-dim: #9f0519;
+  --color-on-error: #ffefee;
+  --color-on-error-container: #570008;
+
+  /* ── Typography ── */
+  --font-headline: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
+
+  /* ── Border Radius ── */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+}
+
+/* ── Global Base Styles ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-headline {
+  font-family: var(--font-headline);
+}
+
+/* ── Material Symbols ── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+}
+
+.material-symbols-filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ── Scanning Line Animation ── */
+@keyframes scanLine {
+  0%, 100% { top: 0%; opacity: 0; }
+  10%       { opacity: 1; }
+  90%       { opacity: 1; }
+  100%      { top: 100%; opacity: 0; }
+}
+
+.scanning-line {
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, transparent, #006857, #96f4dc, #006857, transparent);
+  box-shadow: 0 0 15px 3px #006857;
+  animation: scanLine 2.5s linear infinite;
+  z-index: 10;
+}
+
+/* ── Pulse Dot ── */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.4); }
+}
+
+.pulse-dot {
+  animation: pulseDot 1.5s ease-in-out infinite;
+}
+
+/* ── Gradient CTA Button ── */
+.btn-gradient {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-container));
+}
+
+/* ── Ambient Card Shadow ── */
+.shadow-ambient {
+  box-shadow: 0 20px 40px rgba(46, 47, 44, 0.06);
+}
+
+/* ── Glassmorphism ── */
+.glass {
+  background: rgba(248, 246, 241, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ── Step progress animation ── */
+@keyframes progressBar {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.progress-animated {
+  animation: progressBar 8s ease-in-out forwards;
+}
+
+/* ── Confetti animation (celebration) ── */
+@keyframes confettiFall {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(300px) rotate(720deg); opacity: 0; }
+}
+
+.confetti-piece {
+  animation: confettiFall 2.5s ease-in forwards;
+}
+
+/* ── Checkmark draw ── */
+@keyframes checkDraw {
+  from { stroke-dashoffset: 100; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.check-draw {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: checkDraw 0.6s ease-out 0.3s forwards;
+}
